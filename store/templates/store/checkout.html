@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>تکمیل سفارش</title>
+    <style>
+        body { font-family: Tahoma, sans-serif; background: #f4f4f9; padding: 30px; }
+        .box { max-width: 500px; background: white; padding: 20px; margin: auto; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { background: #4CAF50; color: white; border: none; padding: 10px; width: 100%; border-radius: 4px; cursor: pointer; font-size: 16px; }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h2>اطلاعات ارسال و پرداخت آزمایشی</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label>نام و نام خانوادگی:</label>
+        <input type="text" name="full_name" required>
+        
+        <label>شماره تماس:</label>
+        <input type="text" name="phone" required>
+        
+        <label>آدرس پستی:</label>
+        <textarea name="address" rows="3" required></textarea>
+        
+        <p><strong>مبلغ قابل پرداخت: {{ cart.get_total_price }} تومان</strong> (درگاه پرداخت آزمایشی)</p>
+        <button type="submit">پرداخت و ثبت نهایی سفارش</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>فروشگاه آنلاین من</title>
+    <style>
+        body { font-family: Tahoma, sans-serif; background-color: #f4f4f9; margin: 0; padding: 20px; }
+        header { background: #333; color: #fff; padding: 15px; text-align: center; border-radius: 8px; }
+        .container { display: flex; margin-top: 20px; gap: 20px; }
+        .products { flex: 3; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .product-card { background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: center; }
+        .product-card img { max-width: 100%; height: 140px; object-fit: cover; border-radius: 5px; }
+        .btn { background: #ff5722; color: white; padding: 8px 12px; text-decoration: none; border-radius: 4px; display: inline-block; margin-top: 10px; }
+        .btn:hover { background: #e64a19; }
+        .cart-sidebar { flex: 1; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); height: fit-content; }
+        .cart-item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>فروشگاه آنلاین من (طراحی شده با فیگما و جنگو)</h1>
+</header>
+
+<div class="container">
+    <!-- لیست محصولات -->
+    <div class="products">
+        {% for product in products %}
+        <div class="product-card">
+            <img src="{{ product.image_url|default:'https://via.placeholder.com/150' }}" alt="{{ product.title }}">
+            <h3>{{ product.title }}</h3>
+            <p>{{ product.price }} تومان</p>
+            <p style="font-size: 12px; color: gray;">موجودی: {{ product.stock }}</p>
+            {% if product.stock > 0 %}
+                <a href="{% url 'add_to_cart' product.id %}" class="btn">افزودن به سبد خرید</a>
+            {% else %}
+                <span style="color: red; font-size: 13px;">ناموجود</span>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- سایدبار سبد خرید -->
+    <div class="cart-sidebar">
+        <h3>سبد خرید شما</h3>
+        {% if cart.cart %}
+            {% for item in cart %}
+            <div class="cart-item">
+                <span>{{ item.product.title }} ({{ item.quantity }})</span>
+                <span>{{ item.total_price }} ت</span>
+                <a href="{% url 'remove_from_cart' item.product.id %}" style="color:red; text-decoration:none;">✕</a>
+            </div>
+            {% endfor %}
+            <hr>
+            <p><strong>مجموع کل: {{ cart.get_total_price }} تومان</strong></p>
+            <a href="{% url 'checkout' %}" class="btn" style="background: #4CAF50; width: 100%; text-align: center; box-sizing: border-box;">تکمیل خرید و پرداخت آزمایشی</a>
+        {% else %}
+            <p style="color: #777;">سبد خرید خالی است.</p>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>
