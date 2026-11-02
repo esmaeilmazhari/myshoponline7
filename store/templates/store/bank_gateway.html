@@ -1,0 +1,43 @@
+{% extends 'store/base.html' %}
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0 p-4">
+                <h3 class="text-center mb-4 fw-bold">درگاه پرداخت شبیه‌سازی شده</h3>
+                <div class="alert alert-secondary text-center mb-4">
+                    مبلغ قابل پرداخت: <strong>{{ order.total_price|floatformat:0 }} تومان</strong>
+                </div>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">شماره کارت (۱۶ رقمی)</label>
+                        <input type="text" name="card_number" class="form-control text-center" placeholder="6104xxxxxxxxxxxx" maxlength="16" required>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">تاریخ انقضا (ماه / سال)</label>
+                            <div class="input-group">
+                                <input type="text" name="expire_month" class="form-control text-center" placeholder="ماه" maxlength="2" required>
+                                <span class="input-group-text">/</span>
+                                <input type="text" name="expire_year" class="form-control text-center" placeholder="سال" maxlength="2" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">CVV2</label>
+                            <input type="password" name="cvv2" class="form-control text-center" placeholder="CVV2" maxlength="4" required>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" name="action" value="success" class="btn btn-success btn-lg">پرداخت موفق</button>
+                        <button type="submit" name="action" value="cancel" class="btn btn-outline-danger">انصراف</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

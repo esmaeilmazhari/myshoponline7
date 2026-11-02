@@ -1,0 +1,9 @@
+{% extends 'store/base.html' %}
+{% block content %}
+<div class="text-center py-5 bg-white rounded-4 shadow-sm">
+    <i class="fas fa-check-circle fa-4x text-success mb-3"></i>
+    <h2 class="fw-bold text-success">پرداخت با موفقیت انجام شد!</h2>
+    <p class="text-muted">سفارش شما با شماره پیگیری <strong>{{ order.ref_id }}</strong> ثبت گردید.</p>
+    <a href="{% url 'product_list' %}" class="btn btn-primary mt-3">بازگشت به صفحه اصلی فروشگاه</a>
+</div>
+{% endblock %}

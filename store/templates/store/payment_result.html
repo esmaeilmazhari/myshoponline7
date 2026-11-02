@@ -1,0 +1,25 @@
+{% extends "store/base.html" %}
+{% block content %}
+<div class="max-w-lg mx-auto mt-10">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-xl p-8 text-center">
+        {% if success %}
+            <div class="w-24 h-24 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-12 h-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h1 class="text-2xl font-extrabold text-green-600 mb-4">پرداخت با موفقیت انجام شد!</h1>
+            <div class="bg-green-50 rounded-xl p-4 mb-6">
+                <p class="text-gray-600">کد رهگیری شما:</p>
+                <p class="font-mono text-xl font-bold text-gray-800 tracking-wider">{{ order.tracking_code }}</p>
+            </div>
+        {% else %}
+            <div class="w-24 h-24 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-12 h-12 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </div>
+            <h1 class="text-2xl font-extrabold text-rose-600 mb-4">پرداخت ناموفق!</h1>
+            <p class="text-gray-600 mb-6">اطلاعات وارد شده نادرست است. مبلغ کسر نشده و موجودی محصولات به انبار بازگشت.</p>
+        {% endif %}
+
+        <a href="{% url 'store:product_list' %}" class="inline-block w-full bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-indigo-700 transition">بازگشت به فروشگاه</a>
+    </div>
+</div>
+{% endblock %}

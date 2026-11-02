@@ -1,0 +1,33 @@
+{% extends "store/base.html" %}
+{% block title %}درگاه پرداخت{% endblock %}
+{% block content %}
+<div class="max-w-md mx-auto bg-white rounded-2xl shadow-xl border border-gray-100 p-8 mt-10">
+    <div class="text-center mb-8">
+        <h2 class="text-2xl font-bold text-gray-800">درگاه پرداخت اینترنتی</h2>
+        <p class="text-gray-500 text-sm mt-2">مبلغ قابل پرداخت: <span class="font-bold text-indigo-600">{{ order.total_price|floatformat:0 }} تومان</span></p>
+    </div>
+
+    <form method="POST" class="space-y-5">
+        {% csrf_token %}
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1.5">شماره کارت (16 رقم)</label>
+            <input type="text" name="card_number" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="16" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-center tracking-widest focus:outline-none focus:border-indigo-500 focus:bg-white transition dir-ltr">
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1.5">CVV2</label>
+                <input type="text" name="cvv2" placeholder="123" maxlength="4" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-center tracking-widest focus:outline-none focus:border-indigo-500 focus:bg-white transition dir-ltr">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1.5">تاریخ انقضا</label>
+                <input type="text" name="expiry" placeholder="MM/YY" maxlength="5" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-center tracking-widest focus:outline-none focus:border-indigo-500 focus:bg-white transition dir-ltr">
+            </div>
+        </div>
+
+        <button type="submit" class="w-full bg-green-500 text-white py-3.5 rounded-xl font-bold hover:bg-green-600 transition shadow-sm shadow-green-200 mt-4">
+            پرداخت مبلغ
+        </button>
+        <a href="{% url 'store:cart_detail' %}" class="block text-center text-rose-500 text-sm mt-4 hover:underline">لغو و بازگشت به سبد خرید</a>
+    </form>
+</div>
+{% endblock %}

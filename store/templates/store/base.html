@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}فروشگاه موبایل و لپ‌تاپ مظهری{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <style>
+        body { 
+            font-family: 'Vazirmatn', sans-serif; 
+            /* 👇 بک‌گراند زیبای گرادیانت */
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #1e293b; 
+        }
+    </style>
+</head>
+<body class="flex flex-col justify-between">
+
+    <!-- پیام‌های سیستم (افزودن به سبد، خطا و...) -->
+    <div class="fixed top-20 right-0 left-0 z-50 flex flex-col items-center pointer-events-none">
+        {% for message in messages %}
+        <div class="mb-2 px-6 py-3 rounded-xl shadow-lg font-medium text-white pointer-events-auto transition-all duration-300
+            {% if message.tags == 'success' %}bg-green-500{% else %}bg-rose-500{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="{% url 'store:product_list' %}" class="text-2xl font-black text-indigo-600 tracking-tight flex items-center gap-2">
+                📱 فروشگاه موبایل و لپ‌تاپ مظهری
+            </a>
+            <div class="flex items-center gap-4">
+                <a href="{% url 'store:cart_detail' %}" class="relative bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-4 py-2.5 rounded-xl font-medium text-sm flex items-center gap-2 transition">
+                    🛒 سبد خرید
+                    {% if request.session.cart %}
+                        <span class="absolute -top-2 -right-2 bg-rose-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shadow">
+                            {{ request.session.cart|length }}
+                        </span>
+                    {% endif %}
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-white/50 border-t border-gray-200 mt-16 py-6 text-center text-sm text-gray-500">
+        <p>فروشگاه موبایل و لپ‌تاپ مظهری &copy; 2026</p>
+    </footer>
+</body>
+</html>

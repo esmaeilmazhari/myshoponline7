@@ -1,19 +1,44 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>پرداخت موفق</title>
-    <style>
-        body { font-family: Tahoma, sans-serif; text-align: center; padding: 50px; background: #f4f4f9; }
-        .card { background: white; max-width: 400px; margin: auto; padding: 30px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        a { background: #333; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; display: inline-block; margin-top: 20px; }
-    </style>
-</head>
-<body>
-<div class="card">
-    <h2 style="color: green;">پرداخت آزمایشی با موفقیت انجام شد!</h2>
-    <p>سفارش شما با شماره پیگیری <strong>{{ order.id }}</strong> ثبت گردید.</p>
-    <a href="{% url 'product_list' %}">بازگشت به فروشگاه</a>
+{% extends "store/base.html" %}
+{% block title %}ثبت سفارش موفق - فروشگاه مظهری{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto mt-10">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-xl p-8 sm:p-12 text-center">
+        
+        <!-- آیکون موفقیت -->
+        <div class="w-24 h-24 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-12 h-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+        </div>
+
+        <h1 class="text-3xl font-extrabold text-gray-800 mb-4">سفارش شما با موفقیت ثبت شد!</h1>
+        
+        <p class="text-gray-600 mb-8 leading-relaxed">
+            از خرید شما سپاسگزاریم. کارشناسان ما به زودی برای هماهنگی ارسال سفارش با شما تماس خواهند گرفت.
+        </p>
+
+        <!-- اطلاعات سفارش -->
+        <div class="bg-gray-50 rounded-xl p-6 mb-8 text-right space-y-3 border border-gray-100">
+            <div class="flex justify-between">
+                <span class="text-gray-500">شماره سفارش:</span>
+                <span class="font-bold text-gray-800">#{{ order.id }}</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="text-gray-500">نام مشتری:</span>
+                <span class="font-bold text-gray-800">{{ order.full_name }}</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="text-gray-500">مبلغ کل:</span>
+                <span class="font-bold text-indigo-600">{{ order.total_price|floatformat:0 }} تومان</span>
+            </div>
+        </div>
+
+        <!-- دکمه بازگشت (✅ اصلاح شد: store:product_list) -->
+        <a href="{% url 'store:product_list' %}" class="inline-block w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3.5 rounded-xl font-bold transition shadow-sm shadow-indigo-200">
+            بازگشت به فروشگاه
+        </a>
+
+    </div>
 </div>
-</body>
-</html>
+{% endblock %}

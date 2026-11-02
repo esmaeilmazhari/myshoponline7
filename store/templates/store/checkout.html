@@ -1,32 +1,52 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>تکمیل سفارش</title>
-    <style>
-        body { font-family: Tahoma, sans-serif; background: #f4f4f9; padding: 30px; }
-        .box { max-width: 500px; background: white; padding: 20px; margin: auto; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        input, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        button { background: #4CAF50; color: white; border: none; padding: 10px; width: 100%; border-radius: 4px; cursor: pointer; font-size: 16px; }
-    </style>
-</head>
-<body>
-<div class="box">
-    <h2>اطلاعات ارسال و پرداخت آزمایشی</h2>
-    <form method="POST">
-        {% csrf_token %}
-        <label>نام و نام خانوادگی:</label>
-        <input type="text" name="full_name" required>
-        
-        <label>شماره تماس:</label>
-        <input type="text" name="phone" required>
-        
-        <label>آدرس پستی:</label>
-        <textarea name="address" rows="3" required></textarea>
-        
-        <p><strong>مبلغ قابل پرداخت: {{ cart.get_total_price }} تومان</strong> (درگاه پرداخت آزمایشی)</p>
-        <button type="submit">پرداخت و ثبت نهایی سفارش</button>
-    </form>
+{% extends "store/base.html" %}
+{% block title %}تسویه حساب - فروشگاه مظهری{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+            📝 تکمیل اطلاعات و تسویه حساب
+        </h2>
+
+        <form method="POST" action="{% url 'store:checkout' %}" class="space-y-5">
+            {% csrf_token %}
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <!-- نام -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1.5">نام</label>
+                    <input type="text" name="first_name" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500 focus:bg-white transition">
+                </div>
+                <!-- نام خانوادگی -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1.5">نام خانوادگی</label>
+                    <input type="text" name="last_name" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500 focus:bg-white transition">
+                </div>
+            </div>
+
+            <!-- شماره تماس -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1.5">شماره تماس</label>
+                <input type="text" name="phone" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500 focus:bg-white transition">
+            </div>
+
+            <!-- آدرس پستی (مهم‌ترین بخش) -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1.5">آدرس پستی</label>
+                <textarea name="address" rows="3" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500 focus:bg-white transition"></textarea>
+            </div>
+
+            <!-- جمع کل مبلغ (فقط جهت نمایش) -->
+            <div class="bg-indigo-50 rounded-xl p-4 flex justify-between items-center mt-6">
+                <span class="text-indigo-800 font-medium">مبلغ قابل پرداخت:</span>
+                <span class="text-indigo-600 font-extrabold text-xl">{{ cart.get_total_price|floatformat:0 }} تومان</span>
+            </div>
+
+            <!-- دکمه ثبت -->
+            <button type="submit" class="w-full bg-indigo-600 text-white py-3.5 rounded-xl font-bold hover:bg-indigo-700 transition shadow-sm shadow-indigo-200 mt-4">
+                ثبت سفارش و پرداخت
+            </button>
+        </form>
+    </div>
 </div>
-</body>
-</html>
+{% endblock %}
