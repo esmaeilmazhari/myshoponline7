@@ -32,7 +32,23 @@
         <div>
             <div class="border-t border-gray-100 pt-6 mb-6">
                 <span class="text-gray-500 text-sm block mb-1">قیمت:</span>
-                <span class="text-3xl font-black text-indigo-600">{{ product.price|floatformat:0 }} <span class="text-lg font-medium">تومان</span></span>
+                {% if product.discount_price and product.discount_price < product.price %}
+                    <div class="flex items-center gap-3">
+                        <span class="text-3xl font-black text-rose-600">
+                            {{ product.discount_price|floatformat:0 }} <span class="text-lg font-medium">تومان</span>
+                        </span>
+                        <span class="text-lg text-gray-400 line-through font-semibold">
+                            {{ product.price|floatformat:0 }}
+                        </span>
+                        <span class="bg-rose-100 text-rose-600 text-xs font-extrabold px-2.5 py-1 rounded-full">
+                            تخفیف ویژه
+                        </span>
+                    </div>
+                {% else %}
+                    <span class="text-3xl font-black text-indigo-600">
+                        {{ product.price|floatformat:0 }} <span class="text-lg font-medium">تومان</span>
+                    </span>
+                {% endif %}
             </div>
 
             {% if product.stock > 0 %}
