@@ -12,7 +12,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-your-secret-key-here'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# برای رندر بهتر است این مقدار از متغیرهای محیطی خوانده شود، اما فعلا True بماند تا مشکل تصاویر حل شود.
 DEBUG = True 
 
 ALLOWED_HOSTS = ['*']
@@ -25,9 +24,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     
-    # Cloudinary apps (باید قبل از staticfiles باشد)
-    'cloudinary_storage',
-    'django.contrib.staticfiles',
+    # ترتیب این دو مورد بسیار مهم است (staticfiles باید اول باشد)
+    'django.contrib.staticfiles', 
+    'cloudinary_storage',         
     'cloudinary',
     
     # Store App
@@ -101,7 +100,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# تنظیمات جدید فایل‌های استاتیک و مدیا (جایگزین تنظیمات منسوخ شده)
+# تنظیمات جدید فایل‌های استاتیک و مدیا (جایگزین تنظیمات منسوخ شده در جنگو 4.2+)
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
